@@ -27,7 +27,7 @@
                     <div class="content-container">
                         <p class="subheading">We help companies</p>
                         <h1 class="main-heading">Together, we can make the world better</h1>
-                        <a href="<?php echo base_url('index.php/HomeController/log_in'); ?>" class="donate-btn">
+                        <a href="<?php echo base_url('HomeController/log_in'); ?>" class="donate-btn">
                             DONATE NOW
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -39,7 +39,7 @@
                     <div class="content-container">
                         <p class="subheading">Join our mission</p>
                         <h1 class="main-heading">Empowering communities</h1>
-                        <a href="<?php echo base_url('index.php/HomeController/registration'); ?>" class="donate-btn">
+                        <a href="<?php echo base_url('HomeController/registration'); ?>" class="donate-btn">
                             GET INVOLVED
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -105,7 +105,7 @@
                 </div>
             </div>
             
-            <a href="<?php echo base_url('index.php/HomeController/registration'); ?>" class="donate-btn">
+            <a href="<?php echo base_url('HomeController/registration'); ?>" class="donate-btn">
                 BECOME A VOLUNTEER
                 <i class="fas fa-arrow-right"></i>
             </a>
@@ -161,7 +161,7 @@
       </div>
     </div>
 
-    <a href="<?php echo base_url('index.php/HomeController/donate_now'); ?>" class="donate-btn">
+    <a href="<?php echo base_url('HomeController/donate_now'); ?>" class="donate-btn">
         DONATE NOW
         <i class="fas fa-arrow-right"></i>
     </a>    
@@ -217,11 +217,11 @@
           </div>
 
           <div class="abt-last-btn d-flex justify-content-between align-items-center">
-          <a href="<?php echo base_url('index.php/HomeController/donate_now'); ?>" class="donate-btn">
+          <a href="<?php echo base_url('HomeController/donate_now'); ?>" class="donate-btn">
             DONATE NOW
             <i class="fas fa-arrow-right"></i>
           </a>
-          <a href="<?php echo base_url('index.php/HomeController/registration'); ?>" class="donate-btn">
+          <a href="<?php echo base_url('HomeController/registration'); ?>" class="donate-btn">
             BECOME A VOLUNTEER
             <i class="fas fa-arrow-right"></i>
           </a>
@@ -256,7 +256,7 @@
                 <div class="campaign-content">
                     <h3 class="campaign-title">Independence Day Education Drive (Live)</h3>
                     <p class="campaign-description">Empowering young minds by providing educational kits to underprivileged children.</p>
-                    <a href="<?php echo base_url('index.php/HomeController/donate_now'); ?>" class="donate-btn mx-auto">
+                    <a href="<?php echo base_url('HomeController/donate_now'); ?>" class="donate-btn mx-auto">
                         DONATE NOW
                         <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
                     </a>
@@ -294,7 +294,7 @@
             </div>
         </div>
         
-        <a href="<?php echo base_url('index.php/HomeController/campaigns'); ?>" class="view-all">View All</a>
+        <a href="<?php echo base_url('HomeController/campaigns'); ?>" class="view-all">View All</a>
     </div>
 
 </div>
@@ -783,7 +783,7 @@
                     <h2>Help Them With Donation</h2>
                     <p>Dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernaturaur odit aut fugit, sed quia consequntur. Dicta sunt explicabo. Nemo</p>
                 </div>
-                <a href="<?php echo base_url('index.php/HomeController/donate_now'); ?>" class="donate-btn mx-auto">
+                <a href="<?php echo base_url('HomeController/donate_now'); ?>" class="donate-btn mx-auto">
                     DONATE NOW
                     <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
                 </a>
@@ -797,7 +797,7 @@
                     <h2>Join With Us As Volunteer</h2>
                     <p>Dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernaturaur odit aut fugit, sed quia consequntur. Dicta sunt explicabo. Nemo</p>
                 </div>
-                <a href="<?php echo base_url('index.php/HomeController/registration'); ?>" class="donate-btn mx-auto">
+                <a href="<?php echo base_url('HomeController/registration'); ?>" class="donate-btn mx-auto">
                     JOIN NOW
                     <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
                 </a>

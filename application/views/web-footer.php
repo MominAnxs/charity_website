@@ -7,9 +7,9 @@
             <div class="footer-nav">
                 <h3>Quick Links</h3>
                 <ul class="footer-links">
-                <li><a href="<?php echo base_url('index.php/HomeController/about_us'); ?>">About</a></li>
-                <li><a href="<?php echo base_url('index.php/HomeController/contact_us'); ?>">Contact</a></li>
-                    <li><a href="<?php echo base_url('index.php/HomeController/our-services'); ?>">Our Services</a></li>
+                <li><a href="<?php echo base_url('HomeController/about_us'); ?>">About</a></li>
+                <li><a href="<?php echo base_url('HomeController/contact_us'); ?>">Contact</a></li>
+                    <li><a href="<?php echo base_url('HomeController/our-services'); ?>">Our Services</a></li>
                     
                 </ul>
             </div>
@@ -35,9 +35,9 @@
 
             <!-- CTA Buttons -->
             <div class="cta-section">
-                <a href="<?php echo base_url('index.php/HomeController/donate_now'); ?>" class="cta-button primary-btn">Donate Now</a>
-                <a href="<?php echo base_url('index.php/HomeController/log_in'); ?>" class="cta-button secondary-btn">Log in</a>
-                <a href="<?php echo base_url('index.php/HomeController/sign_up'); ?>" class="cta-button secondary-btn">Sign up</a>
+                <a href="<?php echo base_url('HomeController/donate_now'); ?>" class="cta-button primary-btn">Donate Now</a>
+                <a href="<?php echo base_url('HomeController/log_in'); ?>" class="cta-button secondary-btn">Log in</a>
+                <a href="<?php echo base_url('HomeController/sign_up'); ?>" class="cta-button secondary-btn">Sign up</a>
             </div>
 
             <!-- Contact Information -->

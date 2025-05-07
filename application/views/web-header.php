@@ -29,20 +29,20 @@
 
                 <ul class="nav-links mb-0">
                     <li><a href="<?php echo base_url(); ?>">Home</a></li>
-                    <li><a href="<?php echo base_url('index.php/HomeController/about_us'); ?>">About</a></li>
-                    <li><a href="<?php echo base_url('index.php/HomeController/campaigns'); ?>">Campaigns</a></li>
-                    <li><a href="<?php echo base_url('index.php/HomeController/reports'); ?>">Reports</a></li>
-                    <li><a href="<?php echo base_url('index.php/HomeController/contact_us'); ?>">Contact</a></li>
-                    <li><a href="<?php echo base_url('index.php/HomeController/sign_up'); ?>">Sign-up</a></li>
+                    <li><a href="<?php echo base_url('HomeController/about_us'); ?>">About</a></li>
+                    <li><a href="<?php echo base_url('HomeController/campaigns'); ?>">Campaigns</a></li>
+                    <li><a href="<?php echo base_url('HomeController/reports'); ?>">Reports</a></li>
+                    <li><a href="<?php echo base_url('HomeController/contact_us'); ?>">Contact</a></li>
+                    <li><a href="<?php echo base_url('HomeController/sign_up'); ?>">Sign-up</a></li>
                 </ul>
 
 
                 <div class="right-section">
-                    <a href="<?php echo base_url('index.php/HomeController/donate_now'); ?>" class="donate-btn me-2">
+                    <a href="<?php echo base_url('HomeController/donate_now'); ?>" class="donate-btn me-2">
                         DONATE NOW
                         <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
                     </a>                    
-                    <a href="<?php echo base_url('index.php/HomeController/registration'); ?>" class="donate-btn ms-2">
+                    <a href="<?php echo base_url('HomeController/registration'); ?>" class="donate-btn ms-2">
                         BECOME A VOLUNTEER
                         <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
                     </a>
@@ -63,31 +63,31 @@
                 </a>
             </li>            
             <li>
-                <a href="<?php echo base_url('index.php/HomeController/about_us'); ?>">
+                <a href="<?php echo base_url('HomeController/about_us'); ?>">
                     About us
                     <div class="submenu-toggle">></div>
                 </a>
             </li>
             <li>
-                <a href="<?php echo base_url('index.php/HomeController/campaigns'); ?>">
+                <a href="<?php echo base_url('HomeController/campaigns'); ?>">
                     campaigns
                     <div class="submenu-toggle">></div>
                 </a>
             </li>
             <li>
-                <a href="<?php echo base_url('index.php/HomeController/reports'); ?>">
+                <a href="<?php echo base_url('HomeController/reports'); ?>">
                     Reports
                     <div class="submenu-toggle">></div>
                 </a>
             </li>
             <li>
-                <a href="<?php echo base_url('index.php/HomeController/contact_us'); ?>">
+                <a href="<?php echo base_url('HomeController/contact_us'); ?>">
                     Contact
                     <div class="submenu-toggle">></div>
                 </a>
             </li>
             <li>
-                <a href="<?php echo base_url('index.php/HomeController/sign_up'); ?>">
+                <a href="<?php echo base_url('HomeController/sign_up'); ?>">
                     Sign-up
                     <div class="submenu-toggle">></div>
                 </a>

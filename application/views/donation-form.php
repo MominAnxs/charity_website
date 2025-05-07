@@ -7,6 +7,14 @@
 
     <?php $this->load->view('web-links') ?>
 
+    <style>
+  .error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 2px;
+  }
+</style>
+
 </head>
 <body>
 
@@ -31,64 +39,96 @@
         <div class="donation-form-section-title">Basic Details</div>
         
         <div class="donation-form-field">
-          <label class="donation-form-label" for="fullName">Full Name</label>
-          <input class="donation-form-input" type="text" id="fullName" placeholder=" " required>
+          <label class="donation-form-label" name="first_name">First Name</label>
+          <input class="donation-form-input" type="text" id="first_name" placeholder="Enter First Name" required>
+
+        </div>
+
+        <div class="donation-form-field">
+
+          <label class="donation-form-label" name="last_name">Last Name</label>
+          <input class="donation-form-input" type="text" id="last_name" placeholder="Enter Last Name" required>
+
         </div>
         
         <div class="donation-form-field">
           <label class="donation-form-label" for="email">Email Address</label>
-          <input class="donation-form-input" type="email" id="email" placeholder=" " required>
+          <input class="donation-form-input" type="email" id="email" placeholder="Enter Email Address" required>
         </div>
         
         <div class="donation-form-row">
           <div class="donation-form-column">
             <div class="donation-form-field">
               <label class="donation-form-label" for="phone">Phone Number</label>
-              <input class="donation-form-input" type="tel" id="phone" placeholder=" ">
+              <input class="donation-form-input" type="tel" id="phone" placeholder="Enter Phone Number">
             </div>
           </div>
           
           <div class="donation-form-column">
             <div class="donation-form-field">
               <label class="donation-form-label" for="gender">Gender</label>
-              <input class="donation-form-input" type="text" id="gender" placeholder=" ">
+              <input class="donation-form-input" type="text" id="gender"  placeholder="Enter Your Gender (in capital)">
+            </div>
+          </div>
+
+        </div>
+
+        <div class="donation-form-row mb-3">
+          <div class="donation-form-column">
+            <div class="donation-form-field d-flex align-items-center" style="gap: 10px;">
+              <label class="donation-form-label mb-0" for="donate_now">Donate Now</label>
+              <input type="radio" id="donate_now" name="donation_status" checked>
+            </div>
+          </div>
+
+          <div class="donation-form-column">
+            <div class="donation-form-field d-flex align-items-center" style="gap: 10px;">
+              <label class="donation-form-label mb-0" for="donate_later">Donate Later</label>
+              <input type="radio" id="donate_later" name="donation_status">
             </div>
           </div>
         </div>
+
+        <div class="donation-form-field mb-0" id="donationAmountSection">
+          <label class="donation-form-label" for="amount">Donation Amount</label>
+          <input class="donation-form-input" type="number" id="donationamount" placeholder="Enter Donation Amount" required>
+        </div>
+
       </div>
-      
+      <div id="paymentSection">
       <div class="donation-form-section">
         <div class="donation-form-section-title">Bank Details</div>
         
         <div class="donation-form-field">
           <label class="donation-form-label" for="cardNumber">Card Number</label>
-          <input class="donation-form-input" type="text" id="cardNumber" placeholder=" " required>
+          <input class="donation-form-input" type="text" id="cardNumber" placeholder="Enter Card Number" required>
         </div>
         
         <div class="donation-form-row">
           <div class="donation-form-column">
             <div class="donation-form-field">
               <label class="donation-form-label" for="expiryDate">Expiration Date</label>
-              <input class="donation-form-input" type="text" id="expiryDate" placeholder=" " required>
+              <input class="donation-form-input" type="text" id="expiryDate" placeholder="Enter Expiration Date" required>
             </div>
           </div>
           
           <div class="donation-form-column">
             <div class="donation-form-field">
               <label class="donation-form-label" for="cvv">CVV Number</label>
-              <input class="donation-form-input" type="text" id="cvv" placeholder=" " required>
+              <input class="donation-form-input" type="text" id="cvv" placeholder="Enter CVV Number" required>
             </div>
           </div>
         </div>
         
         <div class="donation-form-field">
           <label class="donation-form-label" for="cardHolder">Card Holder's Name</label>
-          <input class="donation-form-input" type="text" id="cardHolder" placeholder=" " required>
+          <input class="donation-form-input" type="text" id="cardHolder" placeholder="Enter Card Holder's Name" required>
         </div>
       </div>
+    </div>
       
       <div class="donation-form-section">
-        <div class="donation-form-section-title">Other Payment Methods</div>
+        <div class="donation-form-section-title justify-content-center">OR</div>
         
         <div class="donation-form-payment-methods">
           <div class="donation-form-payment-option" data-method="gpay">
@@ -118,12 +158,12 @@
             <input class="donation-form-checkbox" type="checkbox" id="anonymous">
             <span class="donation-form-checkbox-ui"></span>
           </div>
-          <label class="donation-form-label" for="anonymous">Donate Anonymously</label>
+          <label class="donation-form-label mb-0" for="anonymous">Donate Anonymously</label>
         </div>
       </div>
       
       <div class="donation-form-section">
-        <button type="submit" class="donation-form-submit" id="submitBtn">
+        <button type="submit" class="donation-form-submit" id="donate_button" onclick="validateForm()">
           <span>Donate Now</span>
           <div class="donation-form-loading" id="loadingIcon"></div>
         </button>
@@ -133,5 +173,134 @@
   </div>
 
 <!-- donation-form ends -->
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const donateNow = document.getElementById("donate_now");
+    const donateLater = document.getElementById("donate_later");
+
+    const donationAmount = document.getElementById("donationamount")?.closest(".donation-form-field");
+    const bankDetailsSection = document.querySelectorAll(".donation-form-section")[1];
+    const upiSection = document.querySelectorAll(".donation-form-section")[2];
+    const anonymousCheckbox = document.querySelector(".donation-form-anonymous");
+    const submitButton = document.getElementById("donate_button");
+    const headerText = document.querySelector(".donation-form-header h1");
+
+    function toggleDonationFields(show) {
+      if (donationAmount) donationAmount.style.display = show ? "block" : "none";
+      if (bankDetailsSection) bankDetailsSection.style.display = show ? "block" : "none";
+      if (upiSection) upiSection.style.display = show ? "block" : "none";
+      if (anonymousCheckbox) anonymousCheckbox.style.display = show ? "flex" : "none";
+      if (submitButton) submitButton.innerText = show ? "Donate Now" : "Get Registered";
+      if (headerText) headerText.innerText = show ? "Make a Donation!" : "Register Without Donation";
+    }
+
+    donateNow.addEventListener("change", () => toggleDonationFields(true));
+    donateLater.addEventListener("change", () => toggleDonationFields(false));
+  });
+
+  function showError(inputElement, message) {
+    removeError(inputElement); // Clear any existing
+    const error = document.createElement('div');
+    error.className = 'error-message';
+    error.textContent = message;
+    inputElement.insertAdjacentElement('afterend', error);
+  }
+
+  function removeError(inputElement) {
+    const next = inputElement.nextElementSibling;
+    if (next && next.classList.contains('error-message')) {
+      next.remove();
+    }
+  }
+
+  function validateForm() {
+    let isValid = true;
+
+    const nameRegex = /^[a-zA-Z0-9]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d+$/;
+    const AmountRegex = /^\d+$/;
+
+    const firstName = document.getElementById('first_name');
+    const lastName = document.getElementById('last_name');
+    const email = document.getElementById('email');
+    const phone = document.getElementById('phone');
+    const donationAmount = document.getElementById('donationamount');
+
+    // First Name
+    if (firstName.value.trim() === '') {
+      showError(firstName, 'First name is required.');
+      isValid = false;
+    }
+    else if (!nameRegex.test(firstName.value.trim())) {
+      showError(firstName, 'First name must be alphanumeric without special characters.');
+      isValid = false;
+    } else {
+      removeError(firstName);
+    }
+
+    // Last Name
+    if (lastName.value.trim() === '') {
+      showError(lastName, 'Last name is required.');
+      isValid = false;
+    }
+    else if (!nameRegex.test(lastName.value.trim())) {
+      showError(lastName, 'Last name must be alphanumeric without special characters.');
+      isValid = false;
+    } else {
+      removeError(lastName);
+    }
+
+    // Email
+    if (email.value.trim() === '') {
+      showError(email, 'Email address is required.');
+      isValid = false;
+    }
+    else if (!emailRegex.test(email.value.trim())) {
+      showError(email, 'Enter a valid email address.');
+      isValid = false;
+    } else {
+      removeError(email);
+    }
+
+    // Phone
+    if (phone.value.trim() === '') {
+      showError(phone, 'Phone number is required.');
+      isValid = false;
+    }
+    else if (!phoneRegex.test(phone.value.trim())) {
+      showError(phone, 'Phone number must contain only digits.');
+      isValid = false;
+    }
+    else if (phone.value.length < 10) {
+      showError(phone, 'Phone number must be at least 10 digits long.');
+      isValid = false;
+    }
+    else if (phone.value.length > 15) {
+      showError(phone, 'Phone number must be at most 15 digits long.');
+      isValid = false;
+    }
+   else {
+      removeError(phone);
+    }
+
+    if (donationAmount.value.trim() === '') {
+      showError(donationAmount, 'Donation amount is required.');
+      isValid = false;
+    }
+    else if (!AmountRegex.test(donationAmount.value.trim())) {
+      showError(donationAmount, 'Donation amount must be a number.');
+      isValid = false;
+    } else {
+      removeError(donationAmount);
+    }
+
+    if (isValid) {
+      alert('Form submitted successfully!');
+    }
+  }
+
+</script>
 
   <?php $this->load->view('web-footer') ?>
