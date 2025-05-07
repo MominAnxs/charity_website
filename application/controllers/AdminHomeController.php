@@ -29,5 +29,9 @@ class AdminHomeController extends CI_Controller {
     public function profile() {
         $this->load->view('admin-profile');
     }
+
+    public function login() {
+        $this->load->view('admin-login');
+    }
 }
 ?>

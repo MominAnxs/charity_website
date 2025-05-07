@@ -17,5 +17,9 @@ class VolunteerHomeController extends CI_Controller {
     public function profile() {
         $this->load->view('volunteer-profile');
     }
+
+    public function login() {
+        $this->load->view('volunteer-login');
+    }
 }
 ?>
