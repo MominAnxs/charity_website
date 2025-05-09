@@ -63,6 +63,8 @@ class CI_Controller {
     protected $input;
     protected $lang;
     protected $router;
+    public $db;
+    protected $failover;
 
 	/**
 	 * Reference to the CI singleton
