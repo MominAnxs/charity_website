@@ -60,7 +60,7 @@ class CI_Controller {
     protected $uri;
     public $output;
     protected $security;
-    public $input;
+    protected $input;
     protected $lang;
     protected $router;
     public $db;
