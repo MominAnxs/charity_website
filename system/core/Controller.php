@@ -64,7 +64,10 @@ class CI_Controller {
     protected $lang;
     protected $router;
     public $db;
+<<<<<<< HEAD
     public $session;
+=======
+>>>>>>> 3504d309ecaacbf31f05d21dc1c6c07a17258f75
     protected $failover;
 
 	/**
