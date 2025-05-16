@@ -59,9 +59,9 @@ class CI_Controller {
     protected $utf8;
     protected $uri;
     public $output;
-    protected $security;
+    public $security;
     public $input;
-    protected $lang;
+    public $lang;
     protected $router;
     public $db;
     public $session;

@@ -10,6 +10,10 @@ class DonationFormController extends CI_Controller {
         $this->load->model('DonationFormModel'); // Make sure to load the model
     }
 
+    public function index() {
+        $this->load->view('donation-form');
+    }
+
     public function submitDonation() {
         if ($this->input->is_ajax_request()) {
     
@@ -23,13 +27,15 @@ class DonationFormController extends CI_Controller {
                 'email'       => $this->input->post('email'),
                 'phone'       => $this->input->post('phone'),
                 'gender'      => $this->input->post('gender'),
-                'password'    => $this->input->post('password'),
+                'password'    => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
                 'form_type'   => ($form_type === 'registration') ? 'registration' : 'donation',
                 'added_on'    => date('d-m-Y'),
             );
     
             // If it's a donation form, add extra donation-related fields
             if ($form_type === 'donation') {
+                $donation_data['donor_id'] = mt_rand(100000, 999999);
+                $donation_data['payment_method'] = $this->input->post('payment_method');
                 $donation_data['donation_amount'] = $this->input->post('donation_amount');
                 $donation_data['card_number']     = $this->input->post('card_number');
                 $donation_data['exp_date']        = $this->input->post('exp_date');

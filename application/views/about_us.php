@@ -18,9 +18,9 @@
     <div class="about-us-container mt-5">
         <!-- Header Section -->
         <div class="wrapper">
-        <div class="about-us-header">
-            <h1 class="about-us-title">About US</h1>
-            <p class="about-us-header-description">Connecting dreams with opportunities through the power of community support</p>
+        <div class="contact-us-header-text">
+            <h1>Get to know About Us !</h1>
+            <p>Connecting dreams with opportunities through the power of community support</p>
         </div>
         
         <!-- What We Do Section -->

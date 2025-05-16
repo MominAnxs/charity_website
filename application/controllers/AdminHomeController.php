@@ -2,6 +2,8 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 class AdminHomeController extends CI_Controller {
 
+    public $upload;
+
     public function index() {
         $this->load->view('admin-dashboard');
     }

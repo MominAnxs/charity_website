@@ -60,19 +60,24 @@
           <label class="donation-form-label" for="password">Create Password</label>
           <input class="donation-form-input" type="password" id="password" name="password" placeholder="Create Your Password" required>
         </div>
+      
+        <div class="donation-form-field">
+          <label class="donation-form-label" for="conf_password">Confirm Password</label>
+          <input class="donation-form-input" type="password" id="conf_password" name="conf_password" placeholder="Confirm Your Password" required>
+        </div>
         
         <div class="donation-form-row">
           <div class="donation-form-column">
             <div class="donation-form-field">
               <label class="donation-form-label" for="phone">Phone Number</label>
-              <input class="donation-form-input" type="tel" id="phone" name="phone" placeholder="Enter Phone Number">
+              <input class="donation-form-input" type="tel" id="phone" name="phone" placeholder="Enter Phone Number" required>
             </div>
           </div>
           
           <div class="donation-form-column">
             <div class="donation-form-field">
               <label class="donation-form-label" for="gender">Gender <em>(MALE, FEMALE or OTHER)</em></label>
-              <input class="donation-form-input" type="text" id="gender" name="gender"  placeholder="Enter Your Gender (in capital)">
+              <input class="donation-form-input" type="text" id="gender" name="gender"  placeholder="Enter Your Gender (in capital letters)" required>
             </div>
           </div>
 
@@ -190,7 +195,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const donationForm = document.getElementById("donationForm"); // target original form
   const password = document.getElementsByClassName("donation-form-field")[3];
+  const confpassword = document.getElementsByClassName("donation-form-field")[4];
   const passwordInput = document.getElementById("password");
+  const confpasswordInput = document.getElementById("conf_password");
 
   const donationAmount = document.getElementById("donationamount")?.closest(".donation-form-field");
   const bankDetailsSection = document.querySelectorAll(".donation-form-section")[1];
@@ -200,10 +207,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const headerText = document.querySelector(".donation-form-header h1");
 
   // Initially hide password and remove required
-  if (passwordInput) {
-    passwordInput.removeAttribute("required");
-  }
+  if (passwordInput) passwordInput.removeAttribute("required");
+  if (confpasswordInput) confpasswordInput.removeAttribute("required");
   if (password) password.style.display = "none";
+  if (confpassword) confpassword.style.display = "none";
 
   function toggleDonationFields(show) {
     if (password) {
@@ -216,6 +223,13 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     }
+
+    if (confpassword) {
+    confpassword.style.display = show ? "none" : "block";
+    if (confpasswordInput) {
+      show ? confpasswordInput.removeAttribute("required") : confpasswordInput.setAttribute("required", true);
+    }
+  }
 
     if (donationAmount) donationAmount.style.display = show ? "block" : "none";
     if (bankDetailsSection) bankDetailsSection.style.display = show ? "block" : "none";
@@ -239,21 +253,60 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById("expiryDate").setAttribute("required", true);
     document.getElementById("cvv").setAttribute("required", true);
     document.getElementById("cardHolder").setAttribute("required", true);
+
+    // Clear common field errors when switching to Donate Now
+    const commonFieldIds = [
+    'first_name',
+    'last_name',
+    'email',
+    'password',
+    'conf_password',
+    'phone',
+    'gender'
+  ];
+
+  commonFieldIds.forEach(id => {
+    const input = document.getElementById(id);
+    if (input) {
+      removeError(input);
+    }
+  });
+    
   });
 
   donateLater.addEventListener("change", function () {
-    toggleDonationFields(false);
+  toggleDonationFields(false);
 
-    document.getElementById("paymentSection").style.display = "none";
+  document.getElementById("paymentSection").style.display = "none";
 
-    document.getElementById("donationamount").removeAttribute("required");
-    document.getElementById("cardNumber").removeAttribute("required");
-    document.getElementById("expiryDate").removeAttribute("required");
-    document.getElementById("cvv").removeAttribute("required");
-    document.getElementById("cardHolder").removeAttribute("required");
+  document.getElementById("donationamount").removeAttribute("required");
+  document.getElementById("cardNumber").removeAttribute("required");
+  document.getElementById("expiryDate").removeAttribute("required");
+  document.getElementById("cvv").removeAttribute("required");
+  document.getElementById("cardHolder").removeAttribute("required");
+
+  // Clear common field errors when switching to Donate Later
+  const commonFieldIds = [
+    'first_name',
+    'last_name',
+    'email',
+    'phone',
+    'gender',
+    'donationamount',
+    'cardNumber',
+    'expiryDate',
+    'cvv',
+    'cardHolder'
+  ];
+
+  commonFieldIds.forEach(id => {
+    const input = document.getElementById(id);
+    if (input) {
+      removeError(input);
+    }
   });
 });
-
+});
 
 // Add event listeners for real-time validation
 document.addEventListener("DOMContentLoaded", function() {
@@ -264,13 +317,30 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('email'),
     document.getElementById('phone'),
     document.getElementById('gender'),
-    document.getElementById('password') ,
+    document.getElementById('password'),
+    document.getElementById('conf_password'),
     document.getElementById('donationamount'),
     document.getElementById('cardNumber'),
     document.getElementById('expiryDate'),
     document.getElementById('cvv'),
     document.getElementById('cardHolder')
   ];
+
+  // Add input event listeners for real-time validation and error removal
+  inputs.forEach(input => {
+    if (input) {
+      input.addEventListener('input', function() {
+        // Remove error in real-time as user types
+        removeError(this);
+        
+        // Only validate after a short delay to avoid constant validation
+        clearTimeout(this.validationTimer);
+        this.validationTimer = setTimeout(() => {
+          validateField(this);
+        }, 300); // 300ms delay to reduce performance impact
+      });
+    }
+  });
   
   // Add blur (focus lost) event listeners to each input
   inputs.forEach(input => {
@@ -281,9 +351,12 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   });
   
-  // Add input event listeners for real-time validation on some critical fields
+  // Add input event listeners for real-time validation on all fields
+  // Added phone and gender to critical fields for real-time validation
   const criticalFields = [
     document.getElementById('email'),
+    document.getElementById('phone'),
+    document.getElementById('gender'),
     document.getElementById('cardNumber'),
     document.getElementById('expiryDate'),
     document.getElementById('cvv')
@@ -298,13 +371,13 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
-// Function to validate a single field
+// Function to validate a single field with updated logic to handle payment method change
 function validateField(inputElement) {
   const nameRegex = /^[a-zA-Z0-9]+$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   const phoneRegex = /^\d+$/;
   const genderRegex = /^(MALE|FEMALE|OTHER)$/;
-  const passworRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+  const passwordRegex = /^(?!^[!@#$%^&*()_\-+=<>?{}[\]~]+$)[A-Za-z\d!@#$%^&*()_\-+=<>?{}[\]~]{8,}$/;
   const AmountRegex = /^\d+$/;
   const cardNumberRegex = /^\d{15,16}$/;
   const expiryDateRegex = /^(0[1-9]|1[0-2])\/\d{2}$/;
@@ -373,6 +446,15 @@ function validateField(inputElement) {
         return false;
       }
       break;
+
+    case 'conf_password':
+      const passwordValue = $('#password').val();
+      if (value !== passwordValue) {
+        showError(inputElement, 'Passwords do not match.');
+        return false;
+      }
+      break;
+
  
     case 'donationamount':
       if (!AmountRegex.test(value)) {
@@ -421,77 +503,71 @@ function validateField(inputElement) {
   return true;
 }
 
-// Modify the existing validateForm function to use the new validateField function
+// Updated validateForm function to consider payment method
 function validateForm() {
   let isValid = true;
   
-  const fields = [
+  // Basic fields that are always required
+  const basicFields = [
     document.getElementById('first_name'),
     document.getElementById('last_name'),
-    document.getElementById('email'),
+    document.getElementById('email')
+  ];
+  
+  // Optional fields
+  const optionalFields = [
     document.getElementById('phone'),
     document.getElementById('gender')
   ];
   
-  // Validate basic fields
-  fields.forEach(field => {
+  // Validate required basic fields
+  basicFields.forEach(field => {
     if (field && !validateField(field)) {
       isValid = false;
     }
   });
-
-  function setupExpiryDateAutoFormat() {
-  const expiryDateInput = document.getElementById('expiryDate');
   
-  if (expiryDateInput) {
-    expiryDateInput.addEventListener('input', function(e) {
-      let value = e.target.value;
-      
-      // Remove any non-digit characters
-      value = value.replace(/[^\d]/g, '');
-      
-      // Add slash after month automatically
-      if (value.length >= 2) {
-        // Format as MM/YY or MM/YYYY
-        value = value.substring(0, 2) + '/' + value.substring(2);
-      }
-      
-      // Update the input value
-      e.target.value = value;
-    });
-    
-    // Additional logic to handle backspace and delete
-    expiryDateInput.addEventListener('keydown', function(e) {
-      const value = e.target.value;
-      
-      // Handle backspace at the slash position
-      if ((e.key === 'Backspace' || e.key === 'Delete') && 
-          (value.length === 3 && value.charAt(2) === '/')) {
-        e.preventDefault();
-        e.target.value = value.substring(0, 2);
-      }
-    });
+  // Validate optional fields if they have values
+  optionalFields.forEach(field => {
+    if (field && field.value.trim() !== '' && !validateField(field)) {
+      isValid = false;
+    }
+  });
+  
+  // Check if password is required (for registration)
+  const passwordField = document.getElementById('password');
+  if (passwordField && passwordField.hasAttribute('required') && !validateField(passwordField)) {
+    isValid = false;
   }
-}
   
-// Check if it's a donation form
-const isDonation = document.getElementById('donate_now').checked;
+  // Check if it's a donation form
+  const isDonation = document.getElementById('donate_now').checked;
   
   if (isDonation) {
-    const donationFields = [
-      document.getElementById('donationamount'),
-      document.getElementById('cardNumber'),
-      document.getElementById('expiryDate'),
-      document.getElementById('cvv'),
-      document.getElementById('cardHolder')
-    ];
+    // Donation amount is always required for donations
+    const donationAmount = document.getElementById('donationamount');
+    if (donationAmount && !validateField(donationAmount)) {
+      isValid = false;
+    }
     
-    // Validate donation fields
-    donationFields.forEach(field => {
-      if (field && !validateField(field)) {
-        isValid = false;
-      }
-    });
+    // Get selected payment method
+    const selectedPaymentMethod = document.querySelector('.donation-form-payment-option.active-payment')?.getAttribute('data-method') || 'card';
+    
+    // Validate card fields only if card payment is selected
+    if (selectedPaymentMethod === 'card') {
+      const cardFields = [
+        document.getElementById('cardNumber'),
+        document.getElementById('expiryDate'),
+        document.getElementById('cvv'),
+        document.getElementById('cardHolder')
+      ];
+      
+      cardFields.forEach(field => {
+        if (field && field.hasAttribute('required') && !validateField(field)) {
+          isValid = false;
+        }
+      });
+    }
   }
   
   return isValid;
@@ -530,64 +606,136 @@ function removeError(inputElement) {
   }
 }
 
-// AJAX form submission with validation integrated
-$(document).ready(function () {
-  $('.donation-registration-form').submit(function (event) {
-    event.preventDefault();
-    
-    // Run the validation first
-    if (!validateForm()) {
-      console.log("Form validation failed");
-      return false; // Stop form submission if validation fails
-    }
-    
-    console.log("Form validation passed, proceeding with submission");
-
-    const formId = $(this).attr('id');
-    const isDonation = formId === "donationForm";
-
-    // Prepare form data
-    var formData = new FormData();
-    formData.append('first_name', $('#first_name').val());
-    formData.append('last_name', $('#last_name').val());
-    formData.append('email', $('#email').val());
-    formData.append('phone', $('#phone').val());
-    formData.append('gender', $('#gender').val());
-    formData.append('password', $('#password').val());
-
-    if (isDonation) {
-      formData.append('donation_amount', $('#donationamount').val());
-      formData.append('card_number', $('#cardNumber').val());
-      formData.append('exp_date', $('#expiryDate').val());
-      formData.append('cvv_number', $('#cvv').val());
-      formData.append('ch_name', $('#cardHolder').val());
-      formData.append('anonymous', $('#anonymous').is(':checked') ? 1 : 0);
-    }
-
-    formData.append('form_type', isDonation ? 'donation' : 'registration');
-
-    $.ajax({
-      url: "<?php echo base_url('DonationFormController/submitDonation'); ?>",
-      method: "POST",
-      data: formData,
-      processData: false,
-      contentType: false,
-      dataType: "json",
-      success: function (response) {
-        if (response.status === 'success') {
-          alert("Submission successful!");
-          $('.donation-registration-form')[0].reset(); // reset form
-        } else {
-          alert(response.message || "Submission failed.");
+// Add this code to store the selected payment method
+document.addEventListener("DOMContentLoaded", function () {
+  // Initial payment method is 'card' by default
+  let selectedPaymentMethod = 'card';
+  
+  // Add click event listeners to payment options
+  const paymentOptions = document.querySelectorAll('.donation-form-payment-option');
+  
+  paymentOptions.forEach(option => {
+    option.addEventListener('click', function() {
+      // Remove active class from all options
+      paymentOptions.forEach(opt => opt.classList.remove('active-payment'));
+      
+      // Add active class to selected option
+      this.classList.add('active-payment');
+      
+      // Store the selected payment method
+      selectedPaymentMethod = this.getAttribute('data-method');
+      
+      // If UPI option selected, hide card fields and remove required attribute
+      const cardFields = document.querySelectorAll("#paymentSection input[required]");
+      if (selectedPaymentMethod !== 'card') {
+        document.getElementById('paymentSection').style.display = 'none';
+        cardFields.forEach(field => field.removeAttribute('required'));
+      } else {
+        document.getElementById('paymentSection').style.display = 'block';
+        if (document.getElementById('donate_now').checked) {
+          cardFields.forEach(field => field.setAttribute('required', true));
         }
-      },
-      error: function (xhr, status, error) {
-        console.error(error);
-        alert("An error occurred. Please try again.");
       }
     });
   });
+
+  // validating password and confirm password
+  function validatePassword() {
+    const password = $('#password').val();
+    const confPassword = $('#conf_password').val();
+
+    if (password !== confPassword) {
+      alert("Passwords do not match.");
+      return false;
+    }
+
+    return true;
+  }
+
+  // Modify the AJAX form submission to include payment method
+  $(document).ready(function () {
+    $('.donation-registration-form').submit(function (event) {
+      event.preventDefault();
+      
+      // Run the validation first
+      if (!validateForm()) {
+        alert("Form validation failed");
+        return false; // Stop form submission if validation fails
+      }
+
+      if (!validatePassword()) {
+        return false;
+      }
+      
+      const formId = $(this).attr('id');
+      const isDonation = formId === "donationForm";
+
+      // Prepare form data
+      var formData = new FormData();
+      formData.append('first_name', $('#first_name').val());
+      formData.append('last_name', $('#last_name').val());
+      formData.append('email', $('#email').val());
+      formData.append('phone', $('#phone').val());
+      formData.append('gender', $('#gender').val());
+      formData.append('password', $('#password').val());
+
+      if (isDonation) {
+        formData.append('donation_amount', $('#donationamount').val());
+        formData.append('payment_method', selectedPaymentMethod); // Add payment method
+        
+        // Only include card details if card payment is selected
+        if (selectedPaymentMethod === 'card') {
+          formData.append('card_number', $('#cardNumber').val());
+          formData.append('exp_date', $('#expiryDate').val());
+          formData.append('cvv_number', $('#cvv').val());
+          formData.append('ch_name', $('#cardHolder').val());
+        }
+        
+        formData.append('anonymous', $('#anonymous').is(':checked') ? 1 : 0);
+      }
+
+      formData.append('form_type', isDonation ? 'donation' : 'registration');
+
+      $.ajax({
+        url: "<?php echo base_url('DonationFormController/submitDonation'); ?>",
+        method: "POST",
+        data: formData,
+        processData: false,
+        contentType: false,
+        dataType: "json",
+        success: function (response) {
+          if (response.status === 'success') {
+            alert("Submission successful!");
+            $('.donation-registration-form')[0].reset(); // reset form
+          } else {
+            alert(response.message || "Submission failed.");
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error(error);
+          alert("An error occurred. Please try again.");
+        }
+      });
+    });
+  });
 });
+
+// Add CSS style for active payment method
+const style = document.createElement('style');
+style.textContent = `
+  .donation-form-payment-option {
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .donation-form-payment-option.active-payment {
+    background-color: rgba(0, 123, 255, 0.1);
+    border-color: #007bff;
+    transform: scale(1.05);
+    box-shadow: 0 0 8px rgba(0,123,255,0.3);
+  }
+`;
+document.head.appendChild(style);
 
 </script>
 

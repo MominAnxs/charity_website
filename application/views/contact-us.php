@@ -16,9 +16,9 @@
 
     <div class="contact-us-container">
         <div class="wrapper">
-                        <h1 class="about-us-title text-center w-100 my-5">Contact Us</h1>
+                        <!-- <h1 class="about-us-title text-center w-100 my-5">Contact Us</h1> -->
         <div class="contact-us-header-text">
-            <h1>Have questions or need support?</h1>
+            <h1>Have questions or need support ?</h1>
             <p>Whether you're a student, donor, or volunteer, we're here to assist you. Contact us and let's work together to make education accessible for all!</p>
         </div>
 

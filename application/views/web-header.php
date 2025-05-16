@@ -2,8 +2,8 @@
     <div class="top-bar">
         <div class="wrapper">
             <div class="contact-info">
-                <span><i class="fas fa-envelope"></i> example@gamil.com</span>
-                <span><i class="fas fa-map-marker-alt"></i> 12 Green Road, 05 New York</span>
+                <span><i class="fas fa-envelope"></i>mominanas576@gmail.com</span>
+                <span><i class="fas fa-map-marker-alt"></i> BKC Tower, Bandra Kurla Complex</span>
             </div>
             <div class="social-icons">
                 <span>Follow Us On:</span>
@@ -20,7 +20,8 @@
         <div class="wrapper">
             <nav class="navbar">
                 <div class="logo">
-                    <div class="logo-text"><img src="images/logo-1.png"></div>
+                    <div class="logo-icon"></div>
+                    <div class="logo-text-isometric">FUNDamental Grow</div>
                 </div>
 
                 <div class="hamburger" id="burgerBtn">
@@ -28,7 +29,7 @@
                 </div>
 
                 <ul class="nav-links mb-0">
-                    <li><a href="<?php echo base_url(); ?>">Home</a></li>
+                    <li><a href="<?php echo base_url(); ?>" class="nav-links-active">Home</a></li>
                     <li><a href="<?php echo base_url('HomeController/about_us'); ?>">About</a></li>
                     <li><a href="<?php echo base_url('HomeController/campaigns'); ?>">Campaigns</a></li>
                     <li><a href="<?php echo base_url('HomeController/reports'); ?>">Reports</a></li>
@@ -47,7 +48,22 @@
                         <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
                     </a>
                 </div>
+                <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const navLinks = document.querySelectorAll(".nav-links a");
+                    const currentUrl = window.location.href;
+
+                    navLinks.forEach(link => {
+                    // Match base URL and path only (ignores query strings, hashes)
+                    if (currentUrl === link.href || currentUrl.startsWith(link.href)) {
+                        navLinks.forEach(l => l.classList.remove("nav-links-active")); // Remove from all
+                        link.classList.add("nav-links-active"); // Add to the current one
+                    }
+                    });
+                });
+                </script>
             </nav>
+
 
     <!-- Off-canvas menu starts-->
     <div class="off-canvas" id="offCanvas">

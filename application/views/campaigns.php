@@ -26,9 +26,9 @@
 
         <div class="wrapper">
         <!-- Header Section -->
-        <div class="cmpgn-page-header">
-            <h1 class="cmpgn-page-title">Our Campaigns</h1>
-            <p class="cmpgn-page-description">Join us in transforming lives through education. Every contribution makes a difference.</p>
+        <div class="contact-us-header-text">
+            <h1>Participate in our Campaigns !</h1>
+            <p>Join us in transforming lives through education. Every contribution makes a difference.</p>
         </div>
         
         <!-- Campaigns Grid - First Row -->

@@ -17,8 +17,8 @@
 
     <div class="reports-page-container">
         
-        <div class="reports-page-summary-box">
-            <h3>Summary</h3>
+    <div class="contact-us-header-text">
+            <h1>Our Reports Summary !</h1>
             <p>Total donations for 2025 have reached $287,550 with significant increases observed during fundraising events in March and October.</p>
         </div>
         

@@ -71,7 +71,7 @@
     
     <div class="welcome-container">
         <div class="left-content">
-            <p class="welcome-text">Welcome to [chairt's name]</p>
+            <p class="welcome-text">Welcome to FUNDamental Grow</p>
             <h1>Every Rupee Makes a Difference.</h1>
             <p class="welcome-description">In a world where many face challenges, your generosity can bring hope. At [Charity Name], we're dedicated to [insert cause or mission], but we can't do it alone. We need the support of kind-hearted individuals like you to continue our work.</p>
             
@@ -185,8 +185,8 @@
         
       <div class="about-container">
         <div class="image-section">
-          <img src="images/about-one-img-1.jpg" alt="img-1" class="main-image">
-          <img src="images/about-one-img-2.jpg" alt="img-2" class="fence-image">
+          <img src="<?php echo base_url('assets/images/about-one-img-1.jpg') ?>" alt="img-1" class="main-image">
+          <img src="<?php echo base_url('assets/images/about-one-img-2.jpg') ?>" alt="img-2" class="fence-image">
           <div class="stats-box">
             <div class="icon">
                 <i class="fa-solid fa-hand-holding-medical"></i>
