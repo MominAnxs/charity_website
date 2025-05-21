@@ -21,7 +21,7 @@
             <nav class="navbar">
                 <div class="logo">
                     <div class="logo-icon"></div>
-                    <div class="logo-text-isometric">FUNDamental Grow</div>
+                    <div class="logo-text-isometric"><a href="<?php echo base_url(); ?>" style="color:#FF5528;">FUNDamental Grow</a></div>
                 </div>
 
                 <div class="hamburger" id="burgerBtn">
@@ -34,7 +34,15 @@
                     <li><a href="<?php echo base_url('HomeController/campaigns'); ?>">Campaigns</a></li>
                     <li><a href="<?php echo base_url('HomeController/reports'); ?>">Reports</a></li>
                     <li><a href="<?php echo base_url('HomeController/contact_us'); ?>">Contact</a></li>
-                    <li><a href="<?php echo base_url('HomeController/sign_up'); ?>">Sign-up</a></li>
+                    <?php if ($this->session->userdata('donor_logged_in')): ?>
+                        <li><a href="<?php echo base_url('LoginLogoutController/logout'); ?>">Log Out</a></li>
+
+                    <?php elseif ($this->session->userdata('was_logged_in')): ?>
+                        <li><a href="<?php echo base_url('LoginLogoutController'); ?>">Login</a></li>
+
+                    <?php else: ?>
+                        <li><a href="<?php echo base_url('HomeController/sign_up'); ?>">Sign-up</a></li>
+                    <?php endif; ?>
                 </ul>
 
 
@@ -43,10 +51,25 @@
                         DONATE NOW
                         <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
                     </a>                    
-                    <a href="<?php echo base_url('HomeController/registration'); ?>" class="donate-btn ms-2">
-                        BECOME A VOLUNTEER
-                        <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
-                    </a>
+                    <?php if($this->session->userdata('donor_logged_in')): ?>
+                        <?php if ($this->session->userdata('volunteer_logged_in')): ?>
+                            <a href="<?php echo base_url('VolunteerHomeController/index'); ?>" class="donate-btn ms-2">
+                                ENTER VOLUNTEER PANEL <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+                            </a>
+                        <?php else: ?>
+                        <a href="<?php echo base_url('HomeController/registration'); ?>" class="donate-btn ms-2">
+                            BECOME A VOLUNTEER <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+                        </a>
+                        <?php endif; ?>
+                    <?php elseif($this->session->userdata('was_logged_in')): ?>
+                        <a href="<?php echo base_url('LoginLogoutController'); ?>" class="donate-btn ms-2">
+                            BECOME A VOLUNTEER <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+                        </a>
+                    <?php else: ?>
+                        <a href="<?php echo base_url('HomeController/sign_up'); ?>" class="donate-btn ms-2">
+                            BECOME A VOLUNTEER <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+                        </a>
+                    <?php endif; ?>
                 </div>
                 <script>
                 document.addEventListener("DOMContentLoaded", function () {

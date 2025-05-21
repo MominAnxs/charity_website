@@ -36,9 +36,15 @@
             <!-- CTA Buttons -->
             <div class="cta-section">
                 <a href="<?php echo base_url('HomeController/donate_now'); ?>" class="cta-button primary-btn">Donate Now</a>
-                <a href="<?php echo base_url('HomeController/log_in'); ?>" class="cta-button secondary-btn">Log in</a>
-                <a href="<?php echo base_url('HomeController/sign_up'); ?>" class="cta-button secondary-btn">Sign up</a>
+                
+                <?php if ($this->session->userdata('donor_logged_in')) { ?>
+                    <a href="<?php echo base_url('LoginLogoutController/logout'); ?>" class="cta-button secondary-btn">Log out</a>
+                <?php } else { ?>
+                    <a href="<?php echo base_url('HomeController/log_in'); ?>" class="cta-button secondary-btn">Log in</a>
+                    <a href="<?php echo base_url('HomeController/sign_up'); ?>" class="cta-button secondary-btn">Sign up</a>
+                <?php } ?>
             </div>
+
 
             <!-- Contact Information -->
             <div class="contact-section">

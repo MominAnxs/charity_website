@@ -92,11 +92,18 @@
           </div>
 
           <div class="donation-form-column">
-            <div class="donation-form-field d-flex align-items-center" style="gap: 10px;">
+            <div class="donation-form-field d-flex align-items-center mb-0" style="gap: 10px;">
               <label class="donation-form-label mb-0" for="donate_later">Donate Later</label>
-              <input type="radio" id="donate_later" name="donation_status">
+              <input type="radio" id="donate_later" name="donation_status"
+                <?php if ($this->session->userdata('donor_logged_in')) echo 'disabled'; ?>>
             </div>
+            
+            <?php if ($this->session->userdata('donor_logged_in')): ?>
+                <label class="donation-form-label mb-0"><em><sub>(Disabled)</sub></em></label>
+              <?php endif; ?>
+
           </div>
+
         </div>
 
         <div class="donation-form-field mb-0" id="donationAmountSection">
@@ -707,6 +714,8 @@ document.addEventListener("DOMContentLoaded", function () {
           if (response.status === 'success') {
             alert("Submission successful!");
             $('.donation-registration-form')[0].reset(); // reset form
+            $('.donation-form-input').removeClass('valid invalid');
+            window.location.href = "<?php echo base_url('HomeController/index'); ?>";
           } else {
             alert(response.message || "Submission failed.");
           }
@@ -719,23 +728,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
-
-// Add CSS style for active payment method
-const style = document.createElement('style');
-style.textContent = `
-  .donation-form-payment-option {
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .donation-form-payment-option.active-payment {
-    background-color: rgba(0, 123, 255, 0.1);
-    border-color: #007bff;
-    transform: scale(1.05);
-    box-shadow: 0 0 8px rgba(0,123,255,0.3);
-  }
-`;
-document.head.appendChild(style);
 
 </script>
 

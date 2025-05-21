@@ -37,36 +37,42 @@
       <div class="registration-form-section">
         <div class="registration-form-section-title">Basic Details</div>
         
-        <div class="registration-form-field">
+        <div class="d-flex justify-content-between" style="gap: 20px;">
+        <div class="registration-form-field w-50">
           <label class="registration-form-label" for="first_name">First Name</label>
           <input class="registration-form-input" type="text" id="first_name" name="first_name" placeholder="Enter First Name" required>
         </div>
 
-        <div class="registration-form-field">
-          <label class="registration-form-label" for="last_name">First Name</label>
+        <div class="registration-form-field w-50">
+          <label class="registration-form-label" for="last_name">Last Name</label>
           <input class="registration-form-input" type="text" id="last_name" name="last_name" placeholder="Enter Last Name" required>
         </div>
+        </div>
         
-        <div class="registration-form-field">
+        <div class="d-flex justify-content-between" style="gap: 20px;">
+        <div class="registration-form-field w-50">
           <label class="registration-form-label" for="email">Email Address</label>
           <input class="registration-form-input" type="email" id="email" name="email" placeholder="Enter Email Address" required>
+          <span id="emailError" style="color: red;"></span>
+        </div>
+        <div class="registration-form-field w-50">
+          <label class="registration-form-label" for="phone">Phone Number</label>
+          <input class="registration-form-input" type="tel" id="phone" name="phone" placeholder="Enter Phone Number" required>
+          <span id="phoneError" style="color: red;"></span>
+        </div>
         </div>
 
-        <div class="registration-form-field">
+        <div class="d-flex justify-content-between" style="gap: 20px;">
+        <div class="registration-form-field w-50">
           <label class="registration-form-label" for="password">Create Password</label>
           <input class="registration-form-input" type="password" id="password" name="password" placeholder="Create Your Password" required>
         </div>
 
-        <div class="registration-form-field">
+        <div class="registration-form-field w-50">
           <label class="registration-form-label" for="conf_password">Confirm Password</label>
           <input class="registration-form-input" type="password" id="conf_password" name="conf_password" placeholder="Create Your Password" required>
         </div>
-
-        <div class="registration-form-field">
-          <label class="registration-form-label" for="phone">Phone Number</label>
-          <input class="registration-form-input" type="tel" id="phone" name="phone" placeholder="Enter Phone Number" required>
         </div>
-
         
         <div class="registration-form-row">
           
@@ -165,21 +171,23 @@
           </div>
         </div>
         </div>
-
-<!-- // -->
-
-
       </div>
       
       <div class="registration-form-section">
+
+      <div class="text-end my-4">
+      <span class="registration-form-header">Already a Volunteer?</span>
+      <a href="<?php echo base_url('VolunteerHomeController/login'); ?>" class="volunteer-login-btn ms-3">Login</a>
+    </div>
+
+
         <button type="submit" class="registration-form-submit" id="submitBtn">
           <span>Register Now</span>
-          <div class="registration-form-loading" id="loadingIcon"></div>
         </button>
       </div>
     </form>
   </div>
-  </div>
+</div>
 
 <!-- Registration-form ends -->
 
@@ -217,7 +225,7 @@ document.addEventListener("DOMContentLoaded", function() {
         clearTimeout(this.validationTimer);
         this.validationTimer = setTimeout(() => {
           validateField(this);
-        }, 200); // 300ms delay to reduce performance impact
+        }, 200); // 200ms delay to reduce performance impact
       });
     }
   });
@@ -488,18 +496,29 @@ $(document).ready(function () {
       formData.append('availability', availabilityValues.join(','));
 
       $.ajax({
-        url: "<?php echo base_url('RegistrationFormController/submitRegistration'); ?>",
+        url: "<?php echo base_url('RegistrationFormController/submitVolunteerRegistration'); ?>",
         method: "POST",
         data: formData,
         processData: false,
         contentType: false,
         dataType: "json",
         success: function (response) {
+
+            // Clear previous errors first
+            $('#emailError').text('');
+            $('#phoneError').text('');
+
           if (response.status === 'success') {
             alert("Registration successful!");
             $('#registrationForm')[0].reset(); // Corrected form reset method
-          } else {
-            alert(response.message || "Registration failed.");
+            $('.registration-form-input').removeClass('valid invalid');
+          }else if (response.status === 'error') {
+              if (response.field === 'email') {
+                  $('#emailError').text(response.message);
+              }
+              if (response.field === 'phone') {
+                  $('#phoneError').text(response.message);
+              }
           }
         },
         error: function (xhr, status, error) {
@@ -508,8 +527,7 @@ $(document).ready(function () {
         }
       });
     });
-});
-
+  });
 </script>
 
 <?php $this->load->view('web-footer') ?>

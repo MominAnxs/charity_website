@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class DonationFormController extends CI_Controller {
 
+    public $upload;
     public $DonationFormModel;
 
     public function __construct() {
@@ -46,7 +47,8 @@ class DonationFormController extends CI_Controller {
             }
     
             // Insert into DB
-            $result = $this->DonationFormModel->insert_donation($donation_data);
+            $result = $this->DonationFormModel
+            ->update_donor_if_null($donation_data['email'], $donation_data['phone'], $donation_data);
     
             // Send proper JSON response
             $this->output

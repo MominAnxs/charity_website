@@ -14,4 +14,18 @@ class RegistrationFormModel extends CI_Model {
 
     }
 
+    public function volunteer_email_exists($email) {
+        return $this->db
+                    ->where('email', $email)
+                    ->get('volunteer_registration')
+                    ->num_rows() > 0;
+    }
+    
+    public function volunteer_phone_exists($phone) {
+        return $this->db
+                    ->where('phone', $phone)
+                    ->get('volunteer_registration')
+                    ->num_rows() > 0;
+    }    
+
 }

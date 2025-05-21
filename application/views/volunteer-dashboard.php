@@ -49,7 +49,6 @@
                                             <button class="initial-boxes-btn">View Appointments</button>
                                         </div>
                                     </div>
-                                    
                                     <!-- Up-Coming Appointments -->
                                     <div class="col-lg-3 col-md-6">
                                         <div class="initial-boxes-card">

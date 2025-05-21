@@ -25,9 +25,9 @@
                 <!-- Slide 1 -->
                 <div class="swiper-slide slide-1">
                     <div class="content-container">
-                        <p class="subheading">We help companies</p>
-                        <h1 class="main-heading">Together, we can make the world better</h1>
-                        <a href="<?php echo base_url('HomeController/log_in'); ?>" class="donate-btn">
+                        <p class="subheading">We help Beneficiaries</p>
+                        <h1 class="main-heading">Together,We Can Make The World Better</h1>
+                        <a href="<?php echo base_url('DonationFormController'); ?>" class="donate-btn">
                             DONATE NOW
                             <i class="fas fa-arrow-right"></i>
                         </a>
@@ -37,10 +37,36 @@
                 <!-- Slide 2 -->
                 <div class="swiper-slide slide-3">
                     <div class="content-container">
-                        <p class="subheading">Join our mission</p>
-                        <h1 class="main-heading">Empowering communities</h1>
-                        <a href="<?php echo base_url('HomeController/registration'); ?>" class="donate-btn">
-                            GET INVOLVED
+                        <p class="subheading">Join Our Mission</p>
+                        <h1 class="main-heading">Empowering Underprivileges By Education</h1>
+                        <?php if($this->session->userdata('donor_logged_in')): ?>
+                          <?php if($this->session->userdata('volunteer_logged_in')): ?>
+                            <a href="<?php echo base_url('VolunteerHomeController/index'); ?>" class="donate-btn ms-2">
+                                ENTER VOLUNTEER PANEL <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+                            </a>
+                          <?php else: ?>
+                            <a href="<?php echo base_url('HomeController/registration'); ?>" class="donate-btn ms-2">
+                                GET INVOLVED <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+                            </a>
+                          <?php endif; ?>
+                        <?php elseif ($this->session->userdata('was_logged_in')): ?>
+                          <a href="<?php echo base_url('HomeController/log-in'); ?>" class="donate-btn ms-2">
+                            GET INVOLVED <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+                          </a>
+                        <?php else: ?>
+                            <a href="<?php echo base_url('HomeController/sign_up'); ?>" class="donate-btn ms-2">
+                                GET INVOLVED <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="swiper-slide slide-1">
+                    <div class="content-container">
+                        <p class="subheading">Get To Know More About Us</p>
+                        <h1 class="main-heading">Connecting Dreams With Opportunities</h1>
+                        <a href="<?php echo base_url('HomeController/about_us'); ?>" class="donate-btn">
+                            ABOUT US
                             <i class="fas fa-arrow-right"></i>
                         </a>
                     </div>
@@ -105,10 +131,19 @@
                 </div>
             </div>
             
-            <a href="<?php echo base_url('HomeController/registration'); ?>" class="donate-btn">
-                BECOME A VOLUNTEER
-                <i class="fas fa-arrow-right"></i>
-            </a>
+            <?php if($this->session->userdata('donor_logged_in')): ?>
+              <a href="<?php echo base_url('HomeController/registration'); ?>" class="donate-btn ms-2">
+                BECOME A VOLUNTEER <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+              </a>
+            <?php elseif ($this->session->userdata('was_logged_in')): ?>
+              <a href="<?php echo base_url('HomeController/log-in'); ?>" class="donate-btn ms-2">
+                BECOME A VOLUNTEER <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+              </a>
+            <?php else: ?>
+              <a href="<?php echo base_url('HomeController/sign_up'); ?>" class="donate-btn ms-2">
+                BECOME A VOLUNTEER <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+              </a>
+            <?php endif; ?>
         </div>
         
         <div class="right-content">
@@ -221,10 +256,21 @@
             DONATE NOW
             <i class="fas fa-arrow-right"></i>
           </a>
-          <a href="<?php echo base_url('HomeController/registration'); ?>" class="donate-btn">
-            BECOME A VOLUNTEER
-            <i class="fas fa-arrow-right"></i>
-          </a>
+
+          <?php if($this->session->userdata('donor_logged_in')): ?>
+              <a href="<?php echo base_url('HomeController/registration'); ?>" class="donate-btn ms-2">
+                BECOME A VOLUNTEER <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+              </a>
+            <?php elseif ($this->session->userdata('was_logged_in')): ?>
+              <a href="<?php echo base_url('HomeController/log-in'); ?>" class="donate-btn ms-2">
+                BECOME A VOLUNTEER <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+              </a>
+            <?php else: ?>
+              <a href="<?php echo base_url('HomeController/sign_up'); ?>" class="donate-btn ms-2">
+                BECOME A VOLUNTEER <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+              </a>
+            <?php endif; ?>
+          
           </div>
 
         </div>
@@ -271,7 +317,7 @@
                 <div class="campaign-content">
                     <h3 class="campaign-title">World Teacher's Day Fundraiser (Up-Coming)</h3>
                     <p class="campaign-description">Supporting teachers with training programs and better classroom resources.</p>
-                    <a href="#" class="donate-btn mx-auto">
+                    <a href="<?php echo base_url('HomeController/donate_now'); ?>" class="donate-btn mx-auto">
                         DONATE NOW
                         <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
                     </a>
@@ -286,7 +332,7 @@
                 <div class="campaign-content">
                     <h3 class="campaign-title">Children's Day Scholarship Program (Up-Coming)</h3>
                     <p class="campaign-description">Providing financial aid to children in need, ensuring they have access to education for a brighter future.</p>
-                    <a href="#" class="donate-btn mx-auto">
+                    <a href="<?php echo base_url('HomeController/donate_now'); ?>" class="donate-btn mx-auto">
                         DONATE NOW
                         <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
                     </a>
@@ -797,10 +843,27 @@
                     <h2>Join With Us As Volunteer</h2>
                     <p>Dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernaturaur odit aut fugit, sed quia consequntur. Dicta sunt explicabo. Nemo</p>
                 </div>
-                <a href="<?php echo base_url('HomeController/registration'); ?>" class="donate-btn mx-auto">
-                    JOIN NOW
-                    <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
-                </a>
+                <?php if($this->session->userdata('donor_logged_in')): ?>
+                        <?php if ($this->session->userdata('volunteer_logged_in')): ?>
+                            <a href="<?php echo base_url('VolunteerHomeController/index'); ?>" class="donate-btn ms-2">
+                                ENTER VOLUNTEER PANEL <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+                            </a>
+                        <?php else: ?>
+                        <a href="<?php echo base_url('HomeController/registration'); ?>" class="donate-btn ms-2">
+                            BECOME A VOLUNTEER <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+                        </a>
+                        <?php endif; ?>
+                <?php elseif ($this->session->userdata('was_logged_in')): ?>
+                    <a href="<?php echo base_url('HomeController/log-in'); ?>" class="donate-btn mx-auto">
+                        JOIN NOW
+                        <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+                    </a>
+                <?php else: ?>
+                    <a href="<?php echo base_url('HomeController/sign_up'); ?>" class="donate-btn mx-auto">
+                        JOIN NOW
+                        <i class="fas fa-arrow-right" style="font-size: 20px;"></i>
+                    </a>
+                <?php endif; ?>
             </div>
         </div>
     </div>
